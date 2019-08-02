@@ -10,47 +10,53 @@ public class Main {
     public static ArrayList<Integer> tempListX = new ArrayList<>();
     public static ArrayList<Integer> tempListY = new ArrayList<>();
     public static int a = 0;
+
     public static boolean gameNotOver() {
+        boolean returnThis = false;
         if (win()) {
             System.out.println(XorO() + " Wins!");
+            returnThis = true;
         }
-        return !win();
+        return !returnThis;
 
     }
 
     public static boolean win() {
         int sum = 0;
-        boolean checkDifference = true;
+        ArrayList<String> next = new ArrayList<>();
         for (int i = 0; i < returnTempList().size(); i++) {
             sum += returnTempList().get(i);
         }
-        try {
-            int difference = Math.abs(returnTempList().get(0) - returnTempList().get(1));
-            if (difference == 1) {
-                for (int i = 0; i < returnTempList().size(); i++) {
-                    System.out.println(returnTempList().get(i));
-                }
-                if (returnTempList().contains(2) && returnTempList().contains(4) || returnTempList().contains(5) && returnTempList().contains(7)|| returnTempList().contains(1) && returnTempList().contains(3)|| returnTempList().contains(4) && returnTempList().contains(6)) {
-                    checkDifference = false;
-                }
-            }
-            for (int j = 0; j < returnTempList().size() - 1; j++) {
-                if (Math.abs(returnTempList().get(j) - returnTempList().get(j + 1)) != difference) {
-                    checkDifference = false;
-                }
-            }
+        for (int i = 0; i < board.length; i++) {
+            String rowString = "";
+            for (int j = 0; j < board.length; j++) {
+                rowString += board[i][j];
 
-        } catch (IndexOutOfBoundsException e) {
+            }
+            next.add(rowString);
         }
-        return sum % 3 == 0 && returnTempList().size() >= 3 && checkDifference;
+
+
+        getBoard(board, next);
+        return sum % 3 == 0 && returnTempList().size() >= 3;
     }
+
+    public static String[][] getBoard(String[][] board, ArrayList<String> test) {
+        for (int i = 0; i < test.size(); i++) {
+            System.out.print(test.get(i));
+            System.out.println();
+        }
+        ;
+        return board;
+    }
+
 
     public static void createBoard(String board[][]) {
         int b = 0;
 
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board.length; j++) {
-                board[i][j] = Integer.toString(i, j);
+                board[i][j] = Integer.toString(b);
                 System.out.print("| (" + i + "," + j + ") |");
                 name.put(i + "," + j, b);
                 calculate[b] = b;
@@ -118,7 +124,8 @@ public class Main {
 
         }
     }
-    
+
+
     public static void printBoard(String board[][]) {
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board.length; j++) {
@@ -150,3 +157,28 @@ public class Main {
         }
     }
 }
+
+
+/*
+ try {
+            int difference = Math.abs(returnTempList().get(0) - returnTempList().get(1));
+            if (difference == 1) {
+                for (int i = 0; i < returnTempList().size(); i++) {
+                    System.out.println(returnTempList().get(i));
+                }
+                if (returnTempList().contains(2) && returnTempList().contains(4) || returnTempList().contains(5) && returnTempList().contains(7)|| returnTempList().contains(1) && returnTempList().contains(3)|| returnTempList().contains(4) && returnTempList().contains(6)) {
+                    System.out.println("HELLLLLLLLLLLOOOOOOOOOOOOO");
+                    checkDifference = false;
+                }
+            }
+            for (int j = 0; j < returnTempList().size() - 1; j++) {
+                if ((Math.abs(returnTempList().get(j) - returnTempList().get(j + 1)) != difference) && returnTempList().size() == 3) {
+                    System.out.println("YOOOOOOOOOOOOOOOOOOOOOOOO");
+                    checkDifference = false;
+                }
+            }
+
+        } catch (IndexOutOfBoundsException e) {
+        }
+
+ */
